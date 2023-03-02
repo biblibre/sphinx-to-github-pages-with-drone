@@ -1,3 +1,4 @@
+---
 kind: 'pipeline'
 type: 'docker'
 name: 'documentation'
@@ -19,3 +20,8 @@ trigger:
     - 'master'
   event:
     - 'push'
+---
+kind: signature
+hmac: 276c156effa938533977e2c940632589f914df1f496ae0e04d41ab16ca2e05ee
+
+...
