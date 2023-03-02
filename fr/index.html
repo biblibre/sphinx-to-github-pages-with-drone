@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>How to build and publish a Sphinx documentation on GitHub Pages using Drone CI &#8212; Publish Sphinx documentation to GitHub Pages with Drone</title>
+    <title>Comment construire et publier une documentation Sphinx sur GitHub Pages en utilisant Drone CI &#8212; Publish Sphinx documentation to GitHub Pages with Drone</title>
   
   
   
@@ -271,7 +271,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>How to build and publish a Sphinx documentation on GitHub Pages using Drone CI</h1>
+    <h1>Comment construire et publier une documentation Sphinx sur GitHub Pages en utilisant Drone CI</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -281,12 +281,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gh-pages-branch">Initialize <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-mirror-on-git-biblibre-com">Create a mirror on git.biblibre.com</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-github-deploy-key">Create a GitHub deploy key</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-drone">Configure Drone</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-drone-configuration-to-your-repository">Add Drone configuration to your repository</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-it">Test it!</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gh-pages-branch">Initialiser la branche <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-mirror-on-git-biblibre-com">Créer un miroir sur git.biblibre.com</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-github-deploy-key">Créer une clé de déploiement GitHub</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-drone">Configurer Drone</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-drone-configuration-to-your-repository">Ajouter la configuration Drone au dépôt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-it">Tester!</a></li>
 </ul>
             </nav>
         </div>
@@ -299,18 +299,16 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="how-to-build-and-publish-a-sphinx-documentation-on-github-pages-using-drone-ci">
-<h1>How to build and publish a Sphinx documentation on GitHub Pages using Drone CI<a class="headerlink" href="#how-to-build-and-publish-a-sphinx-documentation-on-github-pages-using-drone-ci" title="Lien permanent vers cette rubrique">#</a></h1>
-<p>To follow this tutorial you must have:</p>
+<h1>Comment construire et publier une documentation Sphinx sur GitHub Pages en utilisant Drone CI<a class="headerlink" href="#how-to-build-and-publish-a-sphinx-documentation-on-github-pages-using-drone-ci" title="Lien permanent vers cette rubrique">#</a></h1>
+<p>Pour suivre ce tutoriel vous devez avoir:</p>
 <ul class="simple">
-<li><p>a GitHub repository containing a Sphinx documentation located in
-<code class="docutils literal notranslate"><span class="pre">documentation</span></code> directory at the root of the repository,</p></li>
-<li><p>a <code class="docutils literal notranslate"><span class="pre">documentation/requirements.txt</span></code> file containing Python dependencies,</p></li>
-<li><p>a <code class="docutils literal notranslate"><span class="pre">documentation/conf.py</span></code> file containing Sphinx configuration.</p></li>
+<li><p>un dépôt GitHub contenant une documentation Sphinx sitée dans le répertoire <code class="docutils literal notranslate"><span class="pre">documentation</span></code> à la racine du dépôt,</p></li>
+<li><p>un fichier <code class="docutils literal notranslate"><span class="pre">documentation/requirements.txt</span></code> contenant les dépendances Python,</p></li>
+<li><p>un fichier <code class="docutils literal notranslate"><span class="pre">documentation/conf.py</span></code> contenant la configuration Sphinx.</p></li>
 </ul>
 <section id="initialize-gh-pages-branch">
-<h2>Initialize <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch<a class="headerlink" href="#initialize-gh-pages-branch" title="Lien permanent vers cette rubrique">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> will contain the generated documentation. We need to create it
-and add a few files in it:</p>
+<h2>Initialiser la branche <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code><a class="headerlink" href="#initialize-gh-pages-branch" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>La branche <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> va contenir la documentation générée. On doit la créer et y ajouter quelques fichiers:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">repo</span>
 
 <span class="c1"># Create an orphan branch (no parent commit) and remove all files</span>
@@ -329,7 +327,7 @@ and add a few files in it:</p>
 <span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span>
 </pre></div>
 </div>
-<p>As an example, you can put the following content in <code class="docutils literal notranslate"><span class="pre">index.html</span></code>:</p>
+<p>À titre d’exemple, vous pouvez mettre le contenu suivant dans <code class="docutils literal notranslate"><span class="pre">index.html</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
@@ -348,54 +346,49 @@ and add a few files in it:</p>
 </div>
 </section>
 <section id="create-a-mirror-on-git-biblibre-com">
-<h2>Create a mirror on git.biblibre.com<a class="headerlink" href="#create-a-mirror-on-git-biblibre-com" title="Lien permanent vers cette rubrique">#</a></h2>
-<p>Since our Drone instance only works on git.biblibre.com, we need to create a
-mirror repository there.</p>
+<h2>Créer un miroir sur git.biblibre.com<a class="headerlink" href="#create-a-mirror-on-git-biblibre-com" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Puisque notre instance Drone fonctionne seulement sur git.biblibre.com, on doit créer un dépôt miroir ici.</p>
 <ol class="arabic simple">
-<li><p>Go to <a class="reference external" href="https://git.biblibre.com">https://git.biblibre.com</a></p></li>
-<li><p>Click on the <code class="docutils literal notranslate"><span class="pre">+</span></code> sign in the top right corner and then <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">migration</span></code></p></li>
-<li><p>Choose <code class="docutils literal notranslate"><span class="pre">GitHub</span></code></p></li>
-<li><p>Enter your repository URL and check <code class="docutils literal notranslate"><span class="pre">This</span> <span class="pre">repository</span> <span class="pre">will</span> <span class="pre">be</span> <span class="pre">a</span> <span class="pre">mirror</span></code></p></li>
-<li><p>Choose the right owner and repository name</p></li>
-<li><p>Click the <code class="docutils literal notranslate"><span class="pre">Migrate</span> <span class="pre">repository</span></code> button</p></li>
+<li><p>Allez sur <a class="reference external" href="https://git.biblibre.com">https://git.biblibre.com</a></p></li>
+<li><p>Cliquez sur le signe <code class="docutils literal notranslate"><span class="pre">+</span></code> dans le coin supérieur droit puis <code class="docutils literal notranslate"><span class="pre">Nouvelle</span> <span class="pre">migration</span></code></p></li>
+<li><p>Choisir <code class="docutils literal notranslate"><span class="pre">GitHub</span></code></p></li>
+<li><p>Saisir l’URL du dépôt et cocher <code class="docutils literal notranslate"><span class="pre">Ce</span> <span class="pre">dépôt</span> <span class="pre">sera</span> <span class="pre">un</span> <span class="pre">miroir</span></code></p></li>
+<li><p>Choisir les bons propriétaire et nom de dépôt</p></li>
+<li><p>Cliquer sur le bouton <code class="docutils literal notranslate"><span class="pre">Migrer</span> <span class="pre">le</span> <span class="pre">dépôt</span></code></p></li>
 </ol>
 </section>
 <section id="create-a-github-deploy-key">
-<h2>Create a GitHub deploy key<a class="headerlink" href="#create-a-github-deploy-key" title="Lien permanent vers cette rubrique">#</a></h2>
-<p>Drone will need to push to the GitHub repository. We need a deploy key for
-that. It’s an SSH key that will be granted write access only for this
-repository.</p>
+<h2>Créer une clé de déploiement GitHub<a class="headerlink" href="#create-a-github-deploy-key" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Drone va avoir besoin de pousser dans le dépôt GitHub. On a besoin d’une clé de déploiement pour ça. C’est une clé SSH qui aura un accès en écriture seulement pour ce dépôt.</p>
 <ol class="arabic">
 <li><p>Generate an SSH keys pair with no passphrase:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">github_deploy_key</span> <span class="o">-</span><span class="n">t</span> <span class="n">ed25519</span> <span class="o">-</span><span class="n">C</span> <span class="n">drone</span><span class="o">+</span><span class="n">myrepo</span><span class="nd">@biblibre</span><span class="o">.</span><span class="n">com</span>
 </pre></div>
 </div>
 </li>
-<li><p>Go to github repository’s settings page and click on <code class="docutils literal notranslate"><span class="pre">Deploy</span> <span class="pre">keys</span></code> (or go
-directly to <code class="docutils literal notranslate"><span class="pre">https://github.com/&lt;USER&gt;/&lt;REPO&gt;/settings/keys</span></code>)</p></li>
-<li><p>Click on <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">a</span> <span class="pre">deploy</span> <span class="pre">key</span></code></p></li>
-<li><p>Enter a title</p></li>
-<li><p>Copy the <strong>public</strong> key into the text area</p></li>
-<li><p>Check <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">write</span> <span class="pre">access</span></code></p></li>
+<li><p>Aller sur la page des paramètres du dépôt GitHub et cliquer sur <code class="docutils literal notranslate"><span class="pre">Deploy</span> <span class="pre">keys</span></code> (ou aller directement sur <code class="docutils literal notranslate"><span class="pre">https://github.com/&lt;USER&gt;/&lt;REPO&gt;/settings/keys</span></code>)</p></li>
+<li><p>Cliquer sur <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">a</span> <span class="pre">deploy</span> <span class="pre">key</span></code></p></li>
+<li><p>Saisir un titre</p></li>
+<li><p>Copier la clé <strong>publique</strong> dans la zone de texte</p></li>
+<li><p>Cocher <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">write</span> <span class="pre">access</span></code></p></li>
 </ol>
 </section>
 <section id="configure-drone">
-<h2>Configure Drone<a class="headerlink" href="#configure-drone" title="Lien permanent vers cette rubrique">#</a></h2>
+<h2>Configurer Drone<a class="headerlink" href="#configure-drone" title="Lien permanent vers cette rubrique">#</a></h2>
 <ol class="arabic simple">
-<li><p>Go to <a class="reference external" href="https://drone.biblibre.com">https://drone.biblibre.com</a></p></li>
-<li><p>Click on <code class="docutils literal notranslate"><span class="pre">SYNC</span></code></p></li>
-<li><p>Once the synchronisation is done, search your module and click on <code class="docutils literal notranslate"><span class="pre">Activate</span></code></p></li>
-<li><p>In the settings, check <code class="docutils literal notranslate"><span class="pre">Disable</span> <span class="pre">pull</span> <span class="pre">requests</span></code> and <code class="docutils literal notranslate"><span class="pre">Disable</span> <span class="pre">forks</span></code></p></li>
-<li><p>Click on <code class="docutils literal notranslate"><span class="pre">Save</span></code></p></li>
-<li><p>In the <code class="docutils literal notranslate"><span class="pre">Secrets</span></code> section, enter <code class="docutils literal notranslate"><span class="pre">GH_DEPLOY_KEY</span></code> in the <code class="docutils literal notranslate"><span class="pre">Secret</span> <span class="pre">Name</span></code>
-input, and copy the <strong>private</strong> key into the <code class="docutils literal notranslate"><span class="pre">Secret</span> <span class="pre">Value</span></code> input.</p></li>
-<li><p>Leave the <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">pull</span> <span class="pre">requests</span></code> checkbox <strong>unchecked</strong>.</p></li>
-<li><p>Click on <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">a</span> <span class="pre">secret</span></code>.</p></li>
+<li><p>Aller sur <a class="reference external" href="https://drone.biblibre.com">https://drone.biblibre.com</a></p></li>
+<li><p>Cliquer sur <code class="docutils literal notranslate"><span class="pre">SYNC</span></code></p></li>
+<li><p>Une fois la synchronisation terminée, chercher le module et cliquer sur <code class="docutils literal notranslate"><span class="pre">Activate</span></code></p></li>
+<li><p>Dans les paramètres, cocher <code class="docutils literal notranslate"><span class="pre">Disable</span> <span class="pre">pull</span> <span class="pre">requests</span></code> et <code class="docutils literal notranslate"><span class="pre">Disable</span> <span class="pre">forks</span></code></p></li>
+<li><p>Cliquer sur <code class="docutils literal notranslate"><span class="pre">Save</span></code></p></li>
+<li><p>Dans la section <code class="docutils literal notranslate"><span class="pre">Secrets</span></code>, saisir <code class="docutils literal notranslate"><span class="pre">GH_DEPLOY_KEY</span></code> dans le champ <code class="docutils literal notranslate"><span class="pre">Secret</span> <span class="pre">Name</span></code>, et copier la clé <strong>privée</strong> dans le champ <code class="docutils literal notranslate"><span class="pre">Secret</span> <span class="pre">Value</span></code>.</p></li>
+<li><p>Laisser la case à cocher <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">pull</span> <span class="pre">requests</span></code> <strong>décochée</strong>.</p></li>
+<li><p>Cliquer sur <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">a</span> <span class="pre">secret</span></code>.</p></li>
 </ol>
 </section>
 <section id="add-drone-configuration-to-your-repository">
-<h2>Add Drone configuration to your repository<a class="headerlink" href="#add-drone-configuration-to-your-repository" title="Lien permanent vers cette rubrique">#</a></h2>
-<p>In your repository’s main branch, add the following files:</p>
+<h2>Ajouter la configuration Drone au dépôt<a class="headerlink" href="#add-drone-configuration-to-your-repository" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Dans la branche principale du dépôt, ajouter les fichiers suivants:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">.drone.yml</span></code></span><a class="headerlink" href="#id1" title="Lien permanent vers ce code">#</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
@@ -477,13 +470,13 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Avertissement</p>
-<p>Do not forget to replace &lt;USER&gt; and &lt;REPO&gt; by the correct values</p>
+<p>Ne pas oublier de remplacer &lt;USER&gt; et &lt;REPO&gt; par les bonnes valeurs</p>
 </div>
-<p>Set the execution flag for shell scripts:</p>
+<p>Rendre les scripts exécutables:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">.</span><span class="n">drone</span><span class="o">/*.</span><span class="n">sh</span>
 </pre></div>
 </div>
-<p>Then commit and push:</p>
+<p>Puis valider et pousser:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">add</span> <span class="o">.</span><span class="n">drone</span><span class="o">.</span><span class="n">yml</span> <span class="o">.</span><span class="n">drone</span><span class="o">/*.</span><span class="n">sh</span>
 <span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s1">&#39;Add Drone files to automatically build documentation&#39;</span>
 <span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">master</span>
@@ -491,12 +484,9 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 </div>
 </section>
 <section id="test-it">
-<h2>Test it!<a class="headerlink" href="#test-it" title="Lien permanent vers cette rubrique">#</a></h2>
-<p>Everything is ready and the documentation should be automatically built when
-the mirror on git.biblibre.com get synchronized (once every 8 hours by
-default).</p>
-<p>But you can test right now by manually triggering the synchronization. This
-option can be found in the mirror repository’s settings.</p>
+<h2>Tester!<a class="headerlink" href="#test-it" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Tout est prêt et la documentation devrait être automatiquement générée quand le miroir sur git.biblibre.com sera synchronisé (une fois toutes les 8 heures par défaut).</p>
+<p>Mais il est possible de tester tout de suite en déclenchant manuellement la synchronisation. L’option se trouve dans les paramètres du dépôt miroir.</p>
 </section>
 </section>
 
@@ -524,12 +514,12 @@ option can be found in the mirror repository’s settings.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gh-pages-branch">Initialize <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-mirror-on-git-biblibre-com">Create a mirror on git.biblibre.com</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-github-deploy-key">Create a GitHub deploy key</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-drone">Configure Drone</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-drone-configuration-to-your-repository">Add Drone configuration to your repository</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-it">Test it!</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gh-pages-branch">Initialiser la branche <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-mirror-on-git-biblibre-com">Créer un miroir sur git.biblibre.com</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-github-deploy-key">Créer une clé de déploiement GitHub</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-drone">Configurer Drone</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-drone-configuration-to-your-repository">Ajouter la configuration Drone au dépôt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-it">Tester!</a></li>
 </ul>
   </nav></div>
 
