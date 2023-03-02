@@ -68,7 +68,7 @@ Drone will need to push to the GitHub repository. We need a deploy key for
 that. It's an SSH key that will be granted write access only for this
 repository.
 
-#. Generate an SSH keys pair::
+#. Generate an SSH keys pair with no passphrase::
 
     ssh-keygen -f /tmp/github_deploy_key -t ed25519 -C drone+myrepo@biblibre.com
 
