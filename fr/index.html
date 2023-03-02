@@ -1,0 +1,586 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="fr" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>How to build and publish a Sphinx documentation on GitHub Pages using Drone CI &#8212; Publish Sphinx documentation to GitHub Pages with Drone</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/translations.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="fr"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Passer au contenu principal</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Publish Sphinx documentation to GitHub Pages with Drone</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/biblibre/sphinx-to-github-pages-with-drone" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Dépôt source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/biblibre/sphinx-to-github-pages-with-drone/blob/main/documentation/index.rst?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/biblibre/sphinx-to-github-pages-with-drone/edit/main/documentation/index.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Mode plein écran"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="clair/sombre" aria-label="clair/sombre" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>How to build and publish a Sphinx documentation on GitHub Pages using Drone CI</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenu </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gh-pages-branch">Initialize <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-mirror-on-git-biblibre-com">Create a mirror on git.biblibre.com</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-github-deploy-key">Create a GitHub deploy key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-drone">Configure Drone</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-drone-configuration-to-your-repository">Add Drone configuration to your repository</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-it">Test it!</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="how-to-build-and-publish-a-sphinx-documentation-on-github-pages-using-drone-ci">
+<h1>How to build and publish a Sphinx documentation on GitHub Pages using Drone CI<a class="headerlink" href="#how-to-build-and-publish-a-sphinx-documentation-on-github-pages-using-drone-ci" title="Lien permanent vers cette rubrique">#</a></h1>
+<p>To follow this tutorial you must have:</p>
+<ul class="simple">
+<li><p>a GitHub repository containing a Sphinx documentation located in
+<code class="docutils literal notranslate"><span class="pre">documentation</span></code> directory at the root of the repository,</p></li>
+<li><p>a <code class="docutils literal notranslate"><span class="pre">documentation/requirements.txt</span></code> file containing Python dependencies,</p></li>
+<li><p>a <code class="docutils literal notranslate"><span class="pre">documentation/conf.py</span></code> file containing Sphinx configuration.</p></li>
+</ul>
+<section id="initialize-gh-pages-branch">
+<h2>Initialize <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch<a class="headerlink" href="#initialize-gh-pages-branch" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> will contain the generated documentation. We need to create it
+and add a few files in it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">repo</span>
+
+<span class="c1"># Create an orphan branch (no parent commit) and remove all files</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="o">--</span><span class="n">orphan</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span>
+<span class="n">git</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">.</span>
+
+<span class="c1"># Tell Github to not try to build our documentation</span>
+<span class="n">touch</span> <span class="o">.</span><span class="n">nojekyll</span>
+
+<span class="c1"># Optional, but can be useful to have links to different versions of the</span>
+<span class="c1"># documentation (different languages for instances)</span>
+<span class="n">touch</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span>
+
+<span class="n">git</span> <span class="n">add</span> <span class="o">.</span><span class="n">nojekyll</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;Initial commit&quot;</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span>
+</pre></div>
+</div>
+<p>As an example, you can put the following content in <code class="docutils literal notranslate"><span class="pre">index.html</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;MyRepo user manual&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;MyRepo user manual&lt;/h1&gt;
+
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href=&quot;en/&quot;&gt;English&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;fr/&quot;&gt;French&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</section>
+<section id="create-a-mirror-on-git-biblibre-com">
+<h2>Create a mirror on git.biblibre.com<a class="headerlink" href="#create-a-mirror-on-git-biblibre-com" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Since our Drone instance only works on git.biblibre.com, we need to create a
+mirror repository there.</p>
+<ol class="arabic simple">
+<li><p>Go to <a class="reference external" href="https://git.biblibre.com">https://git.biblibre.com</a></p></li>
+<li><p>Click on the <code class="docutils literal notranslate"><span class="pre">+</span></code> sign in the top right corner and then <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">migration</span></code></p></li>
+<li><p>Choose <code class="docutils literal notranslate"><span class="pre">GitHub</span></code></p></li>
+<li><p>Enter your repository URL and check <code class="docutils literal notranslate"><span class="pre">This</span> <span class="pre">repository</span> <span class="pre">will</span> <span class="pre">be</span> <span class="pre">a</span> <span class="pre">mirror</span></code></p></li>
+<li><p>Choose the right owner and repository name</p></li>
+<li><p>Click the <code class="docutils literal notranslate"><span class="pre">Migrate</span> <span class="pre">repository</span></code> button</p></li>
+</ol>
+</section>
+<section id="create-a-github-deploy-key">
+<h2>Create a GitHub deploy key<a class="headerlink" href="#create-a-github-deploy-key" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Drone will need to push to the GitHub repository. We need a deploy key for
+that. It’s an SSH key that will be granted write access only for this
+repository.</p>
+<ol class="arabic">
+<li><p>Generate an SSH keys pair with no passphrase:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">github_deploy_key</span> <span class="o">-</span><span class="n">t</span> <span class="n">ed25519</span> <span class="o">-</span><span class="n">C</span> <span class="n">drone</span><span class="o">+</span><span class="n">myrepo</span><span class="nd">@biblibre</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+</li>
+<li><p>Go to github repository’s settings page and click on <code class="docutils literal notranslate"><span class="pre">Deploy</span> <span class="pre">keys</span></code> (or go
+directly to <code class="docutils literal notranslate"><span class="pre">https://github.com/&lt;USER&gt;/&lt;REPO&gt;/settings/keys</span></code>)</p></li>
+<li><p>Click on <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">a</span> <span class="pre">deploy</span> <span class="pre">key</span></code></p></li>
+<li><p>Enter a title</p></li>
+<li><p>Copy the <strong>public</strong> key into the text area</p></li>
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">write</span> <span class="pre">access</span></code></p></li>
+</ol>
+</section>
+<section id="configure-drone">
+<h2>Configure Drone<a class="headerlink" href="#configure-drone" title="Lien permanent vers cette rubrique">#</a></h2>
+<ol class="arabic simple">
+<li><p>Go to <a class="reference external" href="https://drone.biblibre.com">https://drone.biblibre.com</a></p></li>
+<li><p>Click on <code class="docutils literal notranslate"><span class="pre">SYNC</span></code></p></li>
+<li><p>Once the synchronisation is done, search your module and click on <code class="docutils literal notranslate"><span class="pre">Activate</span></code></p></li>
+<li><p>In the settings, check <code class="docutils literal notranslate"><span class="pre">Disable</span> <span class="pre">pull</span> <span class="pre">requests</span></code> and <code class="docutils literal notranslate"><span class="pre">Disable</span> <span class="pre">forks</span></code></p></li>
+<li><p>Click on <code class="docutils literal notranslate"><span class="pre">Save</span></code></p></li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">Secrets</span></code> section, enter <code class="docutils literal notranslate"><span class="pre">GH_DEPLOY_KEY</span></code> in the <code class="docutils literal notranslate"><span class="pre">Secret</span> <span class="pre">Name</span></code>
+input, and copy the <strong>private</strong> key into the <code class="docutils literal notranslate"><span class="pre">Secret</span> <span class="pre">Value</span></code> input.</p></li>
+<li><p>Leave the <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">pull</span> <span class="pre">requests</span></code> checkbox <strong>unchecked</strong>.</p></li>
+<li><p>Click on <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">a</span> <span class="pre">secret</span></code>.</p></li>
+</ol>
+</section>
+<section id="add-drone-configuration-to-your-repository">
+<h2>Add Drone configuration to your repository<a class="headerlink" href="#add-drone-configuration-to-your-repository" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>In your repository’s main branch, add the following files:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">.drone.yml</span></code></span><a class="headerlink" href="#id1" title="Lien permanent vers ce code">#</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;pipeline&#39;</span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;docker&#39;</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;documentation&#39;</span>
+<span class="nt">steps</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;build&#39;</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;python:3&#39;</span>
+<span class="w">    </span><span class="nt">commands</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;sh</span><span class="nv"> </span><span class="s">.drone/documentation-build.sh&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;push&#39;</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;alpine&#39;</span>
+<span class="w">    </span><span class="nt">commands</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;apk</span><span class="nv"> </span><span class="s">add</span><span class="nv"> </span><span class="s">git</span><span class="nv"> </span><span class="s">openssh&#39;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;sh</span><span class="nv"> </span><span class="s">.drone/documentation-push.sh&#39;</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">GH_DEPLOY_KEY</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">from_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;GH_DEPLOY_KEY&#39;</span>
+<span class="nt">trigger</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">branch</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;master&#39;</span>
+<span class="w">  </span><span class="nt">event</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;push&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">.drone/documentation-build.sh</span></code></span><a class="headerlink" href="#id2" title="Lien permanent vers ce code">#</a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+<span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dirname<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dirname<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>readlink<span class="w"> </span>-f<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">/documentation&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="nv">languages</span><span class="o">=</span><span class="s2">&quot;en fr&quot;</span>
+<span class="k">for</span><span class="w"> </span>language<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$languages</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span>make<span class="w"> </span>-e<span class="w"> </span><span class="nv">BUILDDIR</span><span class="o">=</span>_build/<span class="nv">$language</span><span class="w"> </span><span class="nv">SPHINXOPTS</span><span class="o">=</span><span class="s2">&quot;-D language=</span><span class="nv">$language</span><span class="s2">&quot;</span><span class="w"> </span>clean<span class="w"> </span>html
+<span class="k">done</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">.drone/documentation-push.sh</span><a class="headerlink" href="#id3" title="Lien permanent vers ce code">#</a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+<span class="nb">unset</span><span class="w"> </span>GIT_AUTHOR_NAME
+<span class="nb">unset</span><span class="w"> </span>GIT_AUTHOR_EMAIL
+<span class="nb">unset</span><span class="w"> </span>GIT_AUTHOR_DATE
+<span class="nb">unset</span><span class="w"> </span>GIT_COMMITTER_NAME
+<span class="nb">unset</span><span class="w"> </span>GIT_COMMITTER_EMAIL
+<span class="nb">unset</span><span class="w"> </span>GIT_COMMITTER_DATE
+
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;drone@biblibre.com&quot;</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Drone CI&quot;</span>
+
+mkdir<span class="w"> </span>-p<span class="w"> </span>~/.ssh
+printenv<span class="w"> </span>GH_DEPLOY_KEY<span class="w"> </span>&gt;<span class="w"> </span>~/.ssh/deploy_key
+chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>~/.ssh/deploy_key
+cat<span class="w"> </span>&gt;<span class="w"> </span>~/.ssh/config<span class="w"> </span><span class="s">&lt;&lt; &#39;CONFIG&#39;</span>
+<span class="s">Host github.com</span>
+<span class="s">User git</span>
+<span class="s">IdentityFile ~/.ssh/deploy_key</span>
+<span class="s">StrictHostKeyChecking accept-new</span>
+<span class="s">CONFIG</span>
+
+<span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>mktemp<span class="w"> </span>-d<span class="k">)</span><span class="s2">&quot;</span>
+git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>gh-pages<span class="w"> </span>git@github.com:&lt;USER&gt;/&lt;REPO&gt;.git<span class="w"> </span>.
+
+<span class="nv">languages</span><span class="o">=</span><span class="s2">&quot;en fr&quot;</span>
+<span class="k">for</span><span class="w"> </span>language<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$languages</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$language</span>
+<span class="w">    </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DRONE_WORKSPACE</span><span class="s2">/documentation/_build/</span><span class="nv">$language</span><span class="s2">/html&quot;</span><span class="w"> </span><span class="nv">$language</span>
+<span class="w">    </span>git<span class="w"> </span>add<span class="w"> </span><span class="nv">$language</span>
+<span class="k">done</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Drone build: </span><span class="nv">$DRONE_BUILD_NUMBER</span><span class="s2">&quot;</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Triggered-by: </span><span class="nv">$DRONE_COMMIT_SHA</span><span class="s2">&quot;</span>
+
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>gh-pages
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Do not forget to replace &lt;USER&gt; and &lt;REPO&gt; by the correct values</p>
+</div>
+<p>Set the execution flag for shell scripts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">.</span><span class="n">drone</span><span class="o">/*.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Then commit and push:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">add</span> <span class="o">.</span><span class="n">drone</span><span class="o">.</span><span class="n">yml</span> <span class="o">.</span><span class="n">drone</span><span class="o">/*.</span><span class="n">sh</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s1">&#39;Add Drone files to automatically build documentation&#39;</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">master</span>
+</pre></div>
+</div>
+</section>
+<section id="test-it">
+<h2>Test it!<a class="headerlink" href="#test-it" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Everything is ready and the documentation should be automatically built when
+the mirror on git.biblibre.com get synchronized (once every 8 hours by
+default).</p>
+<p>But you can test right now by manually triggering the synchronization. This
+option can be found in the mirror repository’s settings.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenu
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-gh-pages-branch">Initialize <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-mirror-on-git-biblibre-com">Create a mirror on git.biblibre.com</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-github-deploy-key">Create a GitHub deploy key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-drone">Configure Drone</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-drone-configuration-to-your-repository">Add Drone configuration to your repository</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-it">Test it!</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Par BibLibre
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023, BibLibre.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
