@@ -27,6 +27,7 @@ html_theme = 'sphinx_book_theme'
 html_theme_options = {
     "path_to_docs": "documentation",
     "repository_url": "https://github.com/biblibre/sphinx-to-github-pages-with-drone",
+    "repository_branch": "master",
     "use_issues_button": False,
     "use_download_button": False,
     "use_source_button": True,
