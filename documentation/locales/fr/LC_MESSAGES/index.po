@@ -8,8 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Demo Sphinx Drone\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-07 08:30+0100\n"
-"PO-Revision-Date: 2023-02-07 08:32+0100\n"
+"POT-Creation-Date: 2023-03-02 14:42+0100\n"
+"PO-Revision-Date: 2023-03-02 15:15+0100\n"
+"Last-Translator: Julian Maurice <julian.maurice@biblibre.com>\n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -17,29 +18,226 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
-"Last-Translator: Julian Maurice <julian.maurice@biblibre.com>\n"
 "X-Generator: Poedit 2.4.2\n"
 
+#: ../../index.rst:2
+msgid ""
+"How to build and publish a Sphinx documentation on GitHub Pages using Drone CI"
+msgstr ""
+"Comment construire et publier une documentation Sphinx sur GitHub Pages en "
+"utilisant Drone CI"
+
+#: ../../index.rst:4
+msgid "To follow this tutorial you must have:"
+msgstr "Pour suivre ce tutoriel vous devez avoir:"
+
+#: ../../index.rst:6
+msgid ""
+"a GitHub repository containing a Sphinx documentation located in "
+"``documentation`` directory at the root of the repository,"
+msgstr ""
+"un dépôt GitHub contenant une documentation Sphinx sitée dans le répertoire "
+"``documentation`` à la racine du dépôt,"
+
+#: ../../index.rst:8
+msgid "a ``documentation/requirements.txt`` file containing Python dependencies,"
+msgstr ""
+"un fichier ``documentation/requirements.txt`` contenant les dépendances Python,"
+
 #: ../../index.rst:9
-msgid "Contents:"
-msgstr "Contenu:"
+msgid "a ``documentation/conf.py`` file containing Sphinx configuration."
+msgstr "un fichier ``documentation/conf.py`` contenant la configuration Sphinx."
 
-#: ../../index.rst:7
-msgid "Welcome to Demo Sphinx Drone's documentation!"
-msgstr "Bienvenue sur la documentation de Démo Sphinx Drone!"
+#: ../../index.rst:12
+msgid "Initialize ``gh-pages`` branch"
+msgstr "Initialiser la branche ``gh-pages``"
 
-#: ../../index.rst:16
-msgid "Indices and tables"
-msgstr "Index et tableaux"
+#: ../../index.rst:14
+msgid ""
+"The ``gh-pages`` will contain the generated documentation. We need to create it "
+"and add a few files in it::"
+msgstr ""
+"La branche ``gh-pages`` va contenir la documentation générée. On doit la créer "
+"et y ajouter quelques fichiers::"
 
-#: ../../index.rst:18
-msgid ":ref:`genindex`"
-msgstr ":ref:`genindex`"
+#: ../../index.rst:34
+msgid "As an example, you can put the following content in ``index.html``::"
+msgstr ""
+"À titre d'exemple, vous pouvez mettre le contenu suivant dans ``index.html``::"
 
-#: ../../index.rst:19
-msgid ":ref:`modindex`"
-msgstr ":ref:`modindex`"
+#: ../../index.rst:52
+msgid "Create a mirror on git.biblibre.com"
+msgstr "Créer un miroir sur git.biblibre.com"
 
-#: ../../index.rst:20
-msgid ":ref:`search`"
-msgstr ":ref:`search`"
+#: ../../index.rst:54
+msgid ""
+"Since our Drone instance only works on git.biblibre.com, we need to create a "
+"mirror repository there."
+msgstr ""
+"Puisque notre instance Drone fonctionne seulement sur git.biblibre.com, on doit "
+"créer un dépôt miroir ici."
+
+#: ../../index.rst:57
+msgid "Go to https://git.biblibre.com"
+msgstr "Allez sur https://git.biblibre.com"
+
+#: ../../index.rst:58
+msgid "Click on the ``+`` sign in the top right corner and then ``New migration``"
+msgstr ""
+"Cliquez sur le signe ``+`` dans le coin supérieur droit puis ``Nouvelle "
+"migration``"
+
+#: ../../index.rst:59
+msgid "Choose ``GitHub``"
+msgstr "Choisir ``GitHub``"
+
+#: ../../index.rst:60
+msgid "Enter your repository URL and check ``This repository will be a mirror``"
+msgstr "Saisir l'URL du dépôt et cocher ``Ce dépôt sera un miroir``"
+
+#: ../../index.rst:61
+msgid "Choose the right owner and repository name"
+msgstr "Choisir les bons propriétaire et nom de dépôt"
+
+#: ../../index.rst:62
+msgid "Click the ``Migrate repository`` button"
+msgstr "Cliquer sur le bouton ``Migrer le dépôt``"
+
+#: ../../index.rst:65
+msgid "Create a GitHub deploy key"
+msgstr "Créer une clé de déploiement GitHub"
+
+#: ../../index.rst:67
+msgid ""
+"Drone will need to push to the GitHub repository. We need a deploy key for "
+"that. It's an SSH key that will be granted write access only for this "
+"repository."
+msgstr ""
+"Drone va avoir besoin de pousser dans le dépôt GitHub. On a besoin d'une clé de "
+"déploiement pour ça. C'est une clé SSH qui aura un accès en écriture seulement "
+"pour ce dépôt."
+
+#: ../../index.rst:71
+msgid "Generate an SSH keys pair::"
+msgstr "Générer une paire de clés SSH::"
+
+#: ../../index.rst:75
+msgid ""
+"Go to github repository's settings page and click on ``Deploy keys`` (or go "
+"directly to ``https://github.com/<USER>/<REPO>/settings/keys``)"
+msgstr ""
+"Aller sur la page des paramètres du dépôt GitHub et cliquer sur ``Deploy keys`` "
+"(ou aller directement sur ``https://github.com/<USER>/<REPO>/settings/keys``)"
+
+#: ../../index.rst:77
+msgid "Click on ``Add a deploy key``"
+msgstr "Cliquer sur ``Add a deploy key``"
+
+#: ../../index.rst:78
+msgid "Enter a title"
+msgstr "Saisir un titre"
+
+#: ../../index.rst:79
+msgid "Copy the **public** key into the text area"
+msgstr "Copier la clé **publique** dans la zone de texte"
+
+#: ../../index.rst:80
+msgid "Check ``Allow write access``"
+msgstr "Cocher ``Allow write access``"
+
+#: ../../index.rst:83
+msgid "Configure Drone"
+msgstr "Configurer Drone"
+
+#: ../../index.rst:85
+msgid "Go to https://drone.biblibre.com"
+msgstr "Aller sur https://drone.biblibre.com"
+
+#: ../../index.rst:86
+msgid "Click on ``SYNC``"
+msgstr "Cliquer sur ``SYNC``"
+
+#: ../../index.rst:87
+msgid ""
+"Once the synchronisation is done, search your module and click on ``Activate``"
+msgstr ""
+"Une fois la synchronisation terminée, chercher le module et cliquer sur "
+"``Activate``"
+
+#: ../../index.rst:88
+msgid "In the settings, check ``Disable pull requests`` and ``Disable forks``"
+msgstr ""
+"Dans les paramètres, cocher ``Disable pull requests`` et ``Disable forks``"
+
+#: ../../index.rst:89
+msgid "Click on ``Save``"
+msgstr "Cliquer sur ``Save``"
+
+#: ../../index.rst:90
+msgid ""
+"In the ``Secrets`` section, enter ``GH_DEPLOY_KEY`` in the ``Secret Name`` "
+"input, and copy the **private** key into the ``Secret Value`` input."
+msgstr ""
+"Dans la section ``Secrets``, saisir ``GH_DEPLOY_KEY`` dans le champ ``Secret "
+"Name``, et copier la clé **privée** dans le champ ``Secret Value``."
+
+#: ../../index.rst:92
+msgid "Leave the ``Allow pull requests`` checkbox **unchecked**."
+msgstr "Laisser la case à cocher ``Allow pull requests`` **décochée**."
+
+#: ../../index.rst:93
+msgid "Click on ``Add a secret``."
+msgstr "Cliquer sur ``Add a secret``."
+
+#: ../../index.rst:96
+msgid "Add Drone configuration to your repository"
+msgstr "Ajouter la configuration Drone au dépôt"
+
+#: ../../index.rst:98
+msgid "In your repository's main branch, add the following files:"
+msgstr "Dans la branche principale du dépôt, ajouter les fichiers suivants:"
+
+#: ../../index.rst:100
+msgid "``.drone.yml``"
+msgstr "``.drone.yml``"
+
+#: ../../index.rst:127
+msgid "``.drone/documentation-build.sh``"
+msgstr "``.drone/documentation-build.sh``"
+
+#: ../../index.rst:139
+msgid ".drone/documentation-push.sh"
+msgstr ".drone/documentation-push.sh"
+
+#: ../../index.rst:177
+msgid "Do not forget to replace <USER> and <REPO> by the correct values"
+msgstr "Ne pas oublier de remplacer <USER> et <REPO> par les bonnes valeurs"
+
+#: ../../index.rst:179
+msgid "Set the execution flag for shell scripts::"
+msgstr "Rendre les scripts exécutables::"
+
+#: ../../index.rst:183
+msgid "Then commit and push::"
+msgstr "Puis valider et pousser::"
+
+#: ../../index.rst:190
+msgid "Test it!"
+msgstr "Tester!"
+
+#: ../../index.rst:192
+msgid ""
+"Everything is ready and the documentation should be automatically built when "
+"the mirror on git.biblibre.com get synchronized (once every 8 hours by default)."
+msgstr ""
+"Tout est prêt et la documentation devrait être automatiquement générée quand le "
+"miroir sur git.biblibre.com sera synchronisé (une fois toutes les 8 heures par "
+"défaut)."
+
+#: ../../index.rst:196
+msgid ""
+"But you can test right now by manually triggering the synchronization. This "
+"option can be found in the mirror repository's settings."
+msgstr ""
+"Mais il est possible de tester tout de suite en déclenchant manuellement la "
+"synchronisation. L'option se trouve dans les paramètres du dépôt miroir."
