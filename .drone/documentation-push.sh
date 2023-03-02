@@ -21,7 +21,7 @@ StrictHostKeyChecking accept-new
 CONFIG
 
 cd "$(mktemp -d)"
-git clone --branch gh-pages git@github.com:jajm/demo-sphinx-drone.git .
+git clone --branch gh-pages git@github.com:biblibre/sphinx-to-github-pages-with-drone.git .
 
 languages="en fr"
 for language in $languages; do
@@ -31,4 +31,4 @@ for language in $languages; do
 done
 git commit -m "Drone build: $DRONE_BUILD_NUMBER" -m "Triggered-by: $DRONE_COMMIT_SHA"
 
-git push --quiet origin gh-pages
+git push origin gh-pages
